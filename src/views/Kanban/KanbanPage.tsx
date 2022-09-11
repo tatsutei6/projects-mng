@@ -5,18 +5,17 @@ import { Kanban, Task } from '../../models/models'
 import KanbanColumn from '../../components/KanbanColumn/KanbanColumn'
 import CreateKanban from '../../components/KanbanColumn/CreateKanban'
 import { TaskModal } from '../../components/KanbanColumn/TaskModal'
-import { TasksContext, useTasksContext } from '../../context/TasksContext'
+import { DataContext } from '../../context/DataContext'
 
 const KanbanPage = (props: { projectId: number | string }) => {
-  const [kanbans, setKanbans] = useState<Kanban[]>([])
+  const [kanbansData, setKanbansData] = useState<Kanban[]>([])
   const [tasksData, setTasksData] = React.useState<Map<string | number, Array<Task>>>(new Map())
 
 
   useEffect(() => {
     (async () => {
-      alert('KanbanPage.useEffect')
       const kanbans = await Dao.getInstance().getKanbansByProjectId(Number(props.projectId))
-      setKanbans(kanbans)
+      setKanbansData(kanbans)
       for (const ele of kanbans) {
         const tasks = await Dao.getInstance().getTasksByKanbanId(ele.id)
         tasksData.set(Number(ele.id), tasks)
@@ -25,22 +24,22 @@ const KanbanPage = (props: { projectId: number | string }) => {
     })()
   }, [setTasksData, props.projectId])
   return (
-    <TasksContext.Provider value={{ tasksData, setTasksData }}>
+    <DataContext.Provider value={{ tasksData, setTasksData, kanbansData, setKanbansData }}>
       <div className={styles['kanban-container']}>
         <h3>看板</h3>
         <div className={styles['kanban-column-outer-container']}>
           {
-            kanbans?.map((kanban) => {
+            kanbansData?.map((kanban) => {
               return (
-                <KanbanColumn key={kanban.id} kanban={kanban} kanbans={kanbans} setKanbans={setKanbans} />
+                <KanbanColumn key={kanban.id} kanban={kanban} />
               )
             })
           }
-          <CreateKanban projectId={props.projectId} setKanbans={setKanbans} />
+          <CreateKanban projectId={props.projectId} setKanbans={setKanbansData} />
         </div>
-        <TaskModal kanbans={kanbans} />
+        <TaskModal kanbans={kanbansData} />
       </div>
-    </TasksContext.Provider>
+    </DataContext.Provider>
   )
 }
 

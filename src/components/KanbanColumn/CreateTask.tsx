@@ -1,17 +1,17 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Card, Input } from 'antd'
 import { Dao } from '../../dao/dao'
-import { Task } from '../../models/models'
+import { DataContext } from '../../context/DataContext'
 
 const CreateTask = (props: {
   projectId: number | string,
-  kanbanId: number | string | undefined,
-  tasksData: Map<string | number, Task[]>,
-  setTasksData: (data: Map<string | number, Task[]>) => void
+  kanbanId: number | string | undefined
 }) => {
   const [name, setName] = useState('')
   const { projectId, kanbanId } = props
   const [inputMode, setInputMode] = useState(false)
+  const { tasksData, setTasksData } = useContext(DataContext)
+
 
   const submit = () => {
     (async () => {
@@ -21,10 +21,10 @@ const CreateTask = (props: {
         setInputMode(false)
         setName('')
         await Dao.getInstance().getTasksByKanbanId(Number(kanbanId))
-        const tempData = props.tasksData.get(Number(kanbanId)) || []
+        const tempData = tasksData.get(Number(kanbanId)) || []
         tempData.push(ele)
-        props.tasksData.set(Number(kanbanId), tempData)
-        props.setTasksData(new Map(props.tasksData))
+        tasksData.set(Number(kanbanId), tempData)
+        setTasksData(new Map(tasksData))
       }
     })()
     // if (kanbanId !== undefined && name != null && name.trim().length > 0) {

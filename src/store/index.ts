@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import { projectSlice } from './project.slice'
 import { userSlice } from './user.slice'
 import { taskSlice } from './task.slice'
-import { kanbanSlice } from './kanban.slice'
 
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 
@@ -11,7 +10,6 @@ export const rootReducer = {
   project: projectSlice.reducer,
   user: userSlice.reducer,
   task: taskSlice.reducer,
-  kanban: kanbanSlice.reducer
 }
 
 export const store = configureStore({

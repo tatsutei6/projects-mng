@@ -6,7 +6,7 @@ import { Kanban, User } from '../../models/models'
 import { useSelector } from 'react-redux'
 import { selectEditingTask, selectTaskModalVisible, taskActions } from '../../store/task.slice'
 import { useAppDispatch } from '../../store'
-import { TasksContext } from '../../context/TasksContext'
+import { DataContext } from '../../context/DataContext'
 
 const layout = {
   labelCol: { span: 8 },
@@ -19,7 +19,7 @@ export const TaskModal = (props: { kanbans: Kanban[] }) => {
   const taskModalVisible = useSelector(selectTaskModalVisible)
   const { modalClose } = useTasksModal()
   const dispatch = useAppDispatch()
-  const { tasksData, setTasksData } = useContext(TasksContext)
+  const { tasksData, setTasksData } = useContext(DataContext)
 
   useEffect(() => {
     (async () => {

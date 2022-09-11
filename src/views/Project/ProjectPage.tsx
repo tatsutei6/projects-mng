@@ -3,7 +3,6 @@ import { Link, Navigate, Route, Routes, useLocation, useParams } from 'react-rou
 import styles from './ProjectPage.module.scss'
 
 import KanbanPage from '../Kanban/KanbanPage'
-import EpicPage from '../Epic/EpicPage'
 import { Menu } from 'antd'
 
 const useComponentName = () => {
@@ -28,9 +27,6 @@ const ProjectPage = () => {
             <Menu.Item key={'kanban'}>
               <Link to={'kanban'}>看板</Link><br />
             </Menu.Item>
-            <Menu.Item key={'epic'}>
-              <Link to={'epic'}>タスクグループ</Link>
-            </Menu.Item>
           </Menu>
         </div>
         <div className={styles['project-main']}>
@@ -38,10 +34,6 @@ const ProjectPage = () => {
             <Route
               path={'/kanban'}
               element={<KanbanPage projectId={id} />}
-            />
-            <Route
-              path={'/epic'}
-              element={<EpicPage />}
             />
             <Route path='*' element={<Navigate to={getPath() + '/kanban'} replace />} />
           </Routes>

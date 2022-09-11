@@ -35,7 +35,6 @@ const ProjectSearch = (props:{setLoading: React.Dispatch<React.SetStateAction<bo
 
   useEffect(() => {
     (async () => {
-      alert('ProjectSearch.useEffect')
       try { // projectを検索する
         setLoading(true)
         const projects = await dao.getProjectsByParam(debouncedParam)

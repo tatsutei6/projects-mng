@@ -1,11 +1,12 @@
 import { Button, Dropdown, Menu, Modal } from 'antd'
 import { Kanban } from '../../models/models'
 import { Dao } from '../../dao/dao'
-import { Dispatch, SetStateAction, useContext } from 'react'
-import { TasksContext } from '../../context/TasksContext'
+import { useContext } from 'react'
+import { DataContext } from '../../context/DataContext'
 
-export const KanbanColumnMoreActions = (props: { kanban: Kanban, kanbans: Kanban[], setKanbans: Dispatch<SetStateAction<Kanban[]>> }) => {
-  const { tasksData, setTasksData } = useContext(TasksContext)
+export const KanbanColumnMoreActions = (props: { kanban: Kanban }) => {
+  const { tasksData, setTasksData } = useContext(DataContext)
+  const { kanbansData, setKanbansData } = useContext(DataContext)
 
   const startDelete = () => {
     Modal.confirm({
@@ -15,7 +16,7 @@ export const KanbanColumnMoreActions = (props: { kanban: Kanban, kanbans: Kanban
       onOk() {
         (async () => {
           await Dao.getInstance().deleteKanban(props.kanban.id)
-          props.setKanbans(props.kanbans.filter((kanban) => kanban.id !== props.kanban.id))
+          setKanbansData(kanbansData.filter((kanban) => kanban.id !== props.kanban.id))
           tasksData.delete(Number(props.kanban.id))
           setTasksData(new Map(tasksData))
           // 看板が削除されたら、その看板に紐づくタスクも削除する

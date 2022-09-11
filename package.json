@@ -37,7 +37,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build -r git@github.com:tatsutei6/project-mng.git -b main"
+    "deploy": "gh-pages -d build -r git@github.com:tatsutei6/projects-mng.git -b main"
   },
   "eslintConfig": {
     "extends": [

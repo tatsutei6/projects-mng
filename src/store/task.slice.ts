@@ -5,13 +5,11 @@ import { RootState } from './index'
 interface TaskState {
   taskModalVisible: boolean
   editingTask: Task | undefined
-  actionType:string
 }
 
 const initialTaskState: TaskState = {
   taskModalVisible: false,
   editingTask: undefined,
-  actionType: '',
 }
 
 export const taskSlice = createSlice({
@@ -28,9 +26,6 @@ export const taskSlice = createSlice({
     },
     setEditingTask(state, action) {
       state.editingTask = action.payload
-    },
-    setActionType(state, action) {
-      state.actionType = action.payload
     }
   }
 })
@@ -44,9 +39,4 @@ export const selectTaskModalVisible = (state: RootState) => {
 export const selectEditingTask = (state: RootState) => {
   return state.task.editingTask
 }
-
-export const selectActionType = (state: RootState) => {
-  return state.task.actionType
-}
-
 

@@ -3,11 +3,11 @@ import styles from './KanbanColumn.module.scss'
 import { Input } from 'antd'
 import { Dao } from '../../dao/dao'
 import { Kanban } from '../../models/models'
-import { TasksContext } from '../../context/TasksContext'
+import { DataContext } from '../../context/DataContext'
 
 const CreateKanban = (props: { projectId: number | string, setKanbans: Dispatch<SetStateAction<Kanban[]>> }) => {
   const [name, setName] = useState('')
-  const { tasksData, setTasksData } = useContext(TasksContext)
+  const { tasksData, setTasksData } = useContext(DataContext)
 
   const submit = () => {
     if (name == null || name.trim().length === 0) {

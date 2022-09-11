@@ -34,6 +34,8 @@
 .project-list-main {
   grid-area: main;
   height: calc(100vh - 6rem);
+  display: flex;
+  flex-direction: column;
 }
 
 .project-list-aside {

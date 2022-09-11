@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './KanbanColumn.module.scss'
 
 import { Kanban, Task } from '../../models/models'
@@ -8,17 +8,16 @@ import busIcon from '../../assets/bug.svg'
 import { Card } from 'antd'
 import { useAppDispatch } from '../../store'
 import { useTasksModal } from '../../hooks/task'
-import { selectActionType, selectEditingTask, taskActions } from '../../store/task.slice'
-import { useSelector } from 'react-redux'
+import { taskActions } from '../../store/task.slice'
 import { KanbanColumnMoreActions } from './KanbanColumnMoreActions'
-import { TasksContext, useTasksContext } from '../../context/TasksContext'
+import { DataContext } from '../../context/DataContext'
 import CreateTask from './CreateTask'
 
-const KanbanColumn = (props: { kanban: Kanban, kanbans: Kanban[], setKanbans: Dispatch<SetStateAction<Kanban[]>> }) => {
+const KanbanColumn = (props: { kanban: Kanban }) => {
   const { kanban } = props
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [, setTasks] = useState<Task[]>([])
 
-  const { tasksData, setTasksData } = useContext(TasksContext)
+  const { tasksData,  } = useContext(DataContext)
 
   // Redux用
   const dispatch = useAppDispatch()
@@ -45,7 +44,7 @@ const KanbanColumn = (props: { kanban: Kanban, kanbans: Kanban[], setKanbans: Di
     <div className={styles['kanban-column-container']}>
       <div className={styles['kanban-title-row']}>
         <span>{kanban.name}</span>
-        <KanbanColumnMoreActions kanban={kanban} kanbans={props.kanbans} setKanbans={props.setKanbans} />
+        <KanbanColumnMoreActions kanban={kanban} />
       </div>
       {
         tempData.map((task) => {
@@ -59,7 +58,7 @@ const KanbanColumn = (props: { kanban: Kanban, kanbans: Kanban[], setKanbans: Di
           )
         })
       }
-      <CreateTask kanbanId={kanban.id} projectId={kanban.projectId} tasksData={tasksData} setTasksData={setTasksData} />
+      <CreateTask kanbanId={kanban.id} projectId={kanban.projectId} />
     </div>)
 }
 
